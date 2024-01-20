@@ -73,12 +73,23 @@ dataset["Answer"] = dataset["Answer"].apply(lambda Text: data_process(Text))
 
 # x_train = dataset[["Answer"]].to_numpy()
 # x_train = dataset["Answer"].values.tolist()
-x_train = list(dataset["Answer"])
+# x_train = list(dataset["Answer"])
 
-y_train = ["afraid", "angry", "anxious","ashamed","bored","calm","confused","disgusted","excited","frustrated","happy", "nostalgic", "proud", "sad", "satisfied", "suprised", "love"]
+# y_train = ["afraid", "angry", "anxious","ashamed","bored","calm","confused","disgusted","excited","frustrated","happy", "nostalgic", "proud", "sad", "satisfied", "suprised", "love"]
 # x_train = dataset.loc[:,"Answer"].values
 
-Encoder = LabelEncoder()
-dataset["Answer.f1.afraid.raw","Answer.f1.angry.raw","Answer.f1.anxious.raw","Answer.f1.ashamed.raw","Answer.f1.bored.raw","Answer.f1.calm.raw","Answer.f1.confused.raw","Answer.f1.disgusted.raw","Answer.f1.excited.raw","Answer.f1.frustrated.raw","Answer.f1.happy.raw","Answer.f1.jealous.raw","Answer.f1.nostalgic.raw","Answer.f1.proud.raw","Answer.f1.sad.raw","Answer.f1.satisfied.raw","Answer.f1.surprised.raw","Answer.t1.exercise.raw","Answer.t1.family.raw","Answer.t1.food.raw","Answer.t1.friends.raw","Answer.t1.god.raw","Answer.t1.health.raw","Answer.t1.love.raw","Answer.t1.recreation.raw","Answer.t1.school.raw","Answer.t1.sleep.raw","Answer.t1.work.raw"] = Encoder.fit_transform(dataset["Answer.f1.afraid.raw","Answer.f1.angry.raw","Answer.f1.anxious.raw","Answer.f1.ashamed.raw","Answer.f1.bored.raw","Answer.f1.calm.raw","Answer.f1.confused.raw","Answer.f1.disgusted.raw","Answer.f1.excited.raw","Answer.f1.frustrated.raw","Answer.f1.happy.raw","Answer.f1.jealous.raw","Answer.f1.nostalgic.raw","Answer.f1.proud.raw","Answer.f1.sad.raw","Answer.f1.satisfied.raw","Answer.f1.surprised.raw","Answer.t1.exercise.raw","Answer.t1.family.raw","Answer.t1.food.raw","Answer.t1.friends.raw","Answer.t1.god.raw","Answer.t1.health.raw","Answer.t1.love.raw","Answer.t1.recreation.raw","Answer.t1.school.raw","Answer.t1.sleep.raw","Answer.t1.work.raw"])
+# Encoder = LabelEncoder()
+# dataset["Answer.f1.afraid.raw","Answer.f1.angry.raw","Answer.f1.anxious.raw","Answer.f1.ashamed.raw","Answer.f1.bored.raw","Answer.f1.calm.raw","Answer.f1.confused.raw","Answer.f1.disgusted.raw","Answer.f1.excited.raw","Answer.f1.frustrated.raw","Answer.f1.happy.raw","Answer.f1.jealous.raw","Answer.f1.nostalgic.raw","Answer.f1.proud.raw","Answer.f1.sad.raw","Answer.f1.satisfied.raw","Answer.f1.surprised.raw","Answer.t1.exercise.raw","Answer.t1.family.raw","Answer.t1.food.raw","Answer.t1.friends.raw","Answer.t1.god.raw","Answer.t1.health.raw","Answer.t1.love.raw","Answer.t1.recreation.raw","Answer.t1.school.raw","Answer.t1.sleep.raw","Answer.t1.work.raw"] = Encoder.fit_transform(dataset["Answer.f1.afraid.raw","Answer.f1.angry.raw","Answer.f1.anxious.raw","Answer.f1.ashamed.raw","Answer.f1.bored.raw","Answer.f1.calm.raw","Answer.f1.confused.raw","Answer.f1.disgusted.raw","Answer.f1.excited.raw","Answer.f1.frustrated.raw","Answer.f1.happy.raw","Answer.f1.jealous.raw","Answer.f1.nostalgic.raw","Answer.f1.proud.raw","Answer.f1.sad.raw","Answer.f1.satisfied.raw","Answer.f1.surprised.raw","Answer.t1.exercise.raw","Answer.t1.family.raw","Answer.t1.food.raw","Answer.t1.friends.raw","Answer.t1.god.raw","Answer.t1.health.raw","Answer.t1.love.raw","Answer.t1.recreation.raw","Answer.t1.school.raw","Answer.t1.sleep.raw","Answer.t1.work.raw"])
 
 # dataset["sentiment"].value_counts()
+
+temp_column = []
+
+for row in range(len(dataset)):
+  temp_list = []
+  for emo in range(len(dataset.iloc[row])):
+    if(dataset.iloc[row][emo] == True):
+      temp_list.append(emo)
+  temp_column.append(temp_list)
+
+print(temp_column)
