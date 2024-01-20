@@ -31,9 +31,7 @@ Columns = ["Answer.f1.jealous.raw", "Answer.f1.awkward.raw", "Answer.t1.exercise
 dataset = dataset.drop(columns = Columns, axis = 1)
 
 melted_df = pd.melt(dataset, id_vars=['Answer'], var_name=None, value_name="True") 
-print(melted_df)
 result_df = melted_df.groupby('Answer')['True'].agg(list)
-print(result_df)
 
 def data_clean(entry):
   # Lowercase the texts
@@ -83,7 +81,11 @@ x_train = list(dataset["Answer"])
 y_train = ["afraid", "angry", "anxious","ashamed","bored","calm","confused","disgusted","excited","frustrated","happy", "nostalgic", "proud", "sad", "satisfied", "suprised", "love"]
 # x_train = dataset.loc[:,"Answer"].values
 
-Encoder = LabelEncoder()
-dataset["Answer.f1.afraid.raw","Answer.f1.angry.raw","Answer.f1.anxious.raw","Answer.f1.ashamed.raw","Answer.f1.bored.raw","Answer.f1.calm.raw","Answer.f1.confused.raw","Answer.f1.disgusted.raw","Answer.f1.excited.raw","Answer.f1.frustrated.raw","Answer.f1.happy.raw","Answer.f1.jealous.raw","Answer.f1.nostalgic.raw","Answer.f1.proud.raw","Answer.f1.sad.raw","Answer.f1.satisfied.raw","Answer.f1.surprised.raw","Answer.t1.exercise.raw","Answer.t1.family.raw","Answer.t1.food.raw","Answer.t1.friends.raw","Answer.t1.god.raw","Answer.t1.health.raw","Answer.t1.love.raw","Answer.t1.recreation.raw","Answer.t1.school.raw","Answer.t1.sleep.raw","Answer.t1.work.raw"] = Encoder.fit_transform(dataset["Answer.f1.afraid.raw","Answer.f1.angry.raw","Answer.f1.anxious.raw","Answer.f1.ashamed.raw","Answer.f1.bored.raw","Answer.f1.calm.raw","Answer.f1.confused.raw","Answer.f1.disgusted.raw","Answer.f1.excited.raw","Answer.f1.frustrated.raw","Answer.f1.happy.raw","Answer.f1.jealous.raw","Answer.f1.nostalgic.raw","Answer.f1.proud.raw","Answer.f1.sad.raw","Answer.f1.satisfied.raw","Answer.f1.surprised.raw","Answer.t1.exercise.raw","Answer.t1.family.raw","Answer.t1.food.raw","Answer.t1.friends.raw","Answer.t1.god.raw","Answer.t1.health.raw","Answer.t1.love.raw","Answer.t1.recreation.raw","Answer.t1.school.raw","Answer.t1.sleep.raw","Answer.t1.work.raw"])
+TF_IDF = TfidfVectorizer(max_features = 5000, ngram_range = (2, 2))
 
-# dataset["sentiment"].value_counts()
+# Fitting and transforming our reviews into a matrix of weighed words
+# This will be our independent features
+X = TF_IDF.fit_transform(dataset["Answer"])
+
+# Check our matrix shape
+print(X.shape)
