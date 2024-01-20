@@ -25,4 +25,47 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 
 dataset = pd.read_csv("data.csv")
-print(dataset.shape)
+
+dataset = dataset.drop("Answer.f1.jealous.raw", axis='columns')
+dataset = dataset.drop("Answer.f1.awkward.raw", axis='columns')
+
+def data_clean(entry):
+  # Lowercase the texts
+  entry = entry.lower()
+
+  # Cleaning punctuations in the text
+  punc = str.maketrans(string.punctuation, ' '*len(string.punctuation))
+  entry = entry.translate(punc)
+
+  # Removing numbers in the text
+  entry = re.sub(r'\d+', '', entry)
+
+  # Remove possible links
+  entry = re.sub('https?://\S+|www\.\S+', '', entry)
+
+  # Deleting newlines
+  entry = re.sub('\n', '', entry)
+
+  return entry
+
+Stopwords = set(nltk.corpus.stopwords.words("english")) - set(["not"])
+
+def data_process(entry):
+  Processed_Text = list()
+  Lemmatizer = WordNetLemmatizer()
+
+  # Tokens of Words
+  Tokens = nltk.word_tokenize(entry)
+
+  # Removing Stopwords and Lemmatizing Words
+  # To reduce noises in our dataset, also to keep it simple and still 
+  # powerful, we will only omit the word `not` from the list of stopwords
+
+  for word in Tokens:
+    if word not in Stopwords:
+      Processed_Text.append(Lemmatizer.lemmatize(word))
+
+  return(" ".join(Processed_Text))
+
+dataset["Answer"] = dataset["Answer"].apply(lambda Text: data_clean(Text))
+dataset["Answer"] = dataset["Answer"].apply(lambda Text: data_process(Text))
