@@ -28,7 +28,7 @@ dataset = pd.read_csv("data.csv")
 
 Columns = ["Answer.f1.jealous.raw", "Answer.f1.awkward.raw", "Answer.t1.exercise.raw", "Answer.t1.family.raw", "Answer.t1.food.raw", "Answer.t1.friends.raw", "Answer.t1.god.raw", "Answer.t1.health.raw", "Answer.t1.recreation.raw", "Answer.t1.school.raw", "Answer.t1.sleep.raw", "Answer.t1.work.raw"]
 
-dataset = dataset.drop(columns = Columns, axis = 1, inplace = True)
+dataset = dataset.drop(columns = Columns, axis = 1)
 
 def data_clean(entry):
   # Lowercase the texts
