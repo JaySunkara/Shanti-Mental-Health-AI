@@ -30,6 +30,11 @@ Columns = ["Answer.f1.jealous.raw", "Answer.f1.awkward.raw", "Answer.t1.exercise
 
 dataset = dataset.drop(columns = Columns, axis = 1)
 
+melted_df = pd.melt(dataset, id_vars=['Answer'], var_name=None, value_name="True") 
+print(melted_df)
+result_df = melted_df.groupby('Answer')['True'].agg(list)
+print(result_df)
+
 def data_clean(entry):
   # Lowercase the texts
   entry = entry.lower()
