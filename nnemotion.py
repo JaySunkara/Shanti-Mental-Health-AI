@@ -54,8 +54,6 @@ for row in range(len(df)):
       temp_list.append(1)
     if(df.iloc[row][emo] == False):
        temp_list.append(0)
-  temp_list.insert(0, 0)
-  temp_list.insert(0, 0)
   temp_column.append(temp_list)
 df['Sentiments'] = temp_column
 
@@ -80,7 +78,7 @@ model = Sequential()
 model.add(Embedding(MAX_NB_WORDS, EMBEDDING_DIM, input_length=X.shape[1]))
 model.add(SpatialDropout1D(0.2))
 model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
-model.add(Dense(13, activation='sigmoid'))
+model.add(Dense(11, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 epochs = 7
@@ -88,13 +86,15 @@ batch_size = 64
 
 history = model.fit(X_train, Y_train, epochs=epochs, batch_size=batch_size,validation_split=0.1,callbacks=[EarlyStopping(monitor='val_loss', patience=3, min_delta=0.0001)])
 
+model.save('bruh.h5')
+
 accr = model.evaluate(X_test,Y_test)
 print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(accr[0],accr[1]))
 
 
-new_complaint = ['My dog had a slight medical injury but the doctors said we had to pay a lot for the surgery.']
+new_complaint = ['I won the lottery today! I am extremely happy about my kids and their future.']
 seq = tokenizer.texts_to_sequences(new_complaint)
 padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
 pred = model.predict(padded)
-labels = ['bruh', 'bruh', 'anger', 'anticipation', 'disgust', 'fear', 'joy', 'love', 'optimism', 'pessimism', 'sadness', 'surprise', 'trust']
+labels = ['anger', 'anticipation', 'disgust', 'fear', 'joy', 'love', 'optimism', 'pessimism', 'sadness', 'surprise', 'trust']
 print(pred, labels[np.argmax(pred)])
