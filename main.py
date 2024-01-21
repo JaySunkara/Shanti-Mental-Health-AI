@@ -79,6 +79,8 @@ result_df = melted_df.groupby('Answer')['True'].agg(list)
 X = result_df.index
 Y = result_df.values
 
+
+
 # y_train = ["afraid", "angry", "anxious","ashamed","bored","calm","confused","disgusted","excited","frustrated","happy", "nostalgic", "proud", "sad", "satisfied", "suprised", "love"]
 # x_train = dataset.loc[:,"Answer"].values
 
@@ -89,3 +91,5 @@ Y = result_df.values
 TF_IDF = TfidfVectorizer(max_features = 5000, ngram_range = (2, 2)) # Fitting and transforming our reviews into a matrix of weighed words 
 # This will be our independent features 
 X = TF_IDF.fit_transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.25, random_state = 42)
