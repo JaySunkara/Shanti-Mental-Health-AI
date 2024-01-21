@@ -92,7 +92,7 @@ accr = model.evaluate(X_test,Y_test)
 print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(accr[0],accr[1]))
 
 
-new_complaint = ['I won the lottery today! I am extremely happy about my kids and their future.']
+new_complaint = ['My dog had a slight medical injury but the doctors said we had to pay a lot for the surgery.']
 seq = tokenizer.texts_to_sequences(new_complaint)
 padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
 pred = model.predict(padded)
