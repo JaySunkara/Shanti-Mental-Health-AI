@@ -87,7 +87,15 @@ batch_size = 64
 
 history = model.fit(X_train, Y_train, epochs=epochs, batch_size=batch_size,validation_split=0.1,callbacks=[EarlyStopping(monitor='val_loss', patience=3, min_delta=0.0001)])
 
-model.save('bruh.h5')
+# model_json = model.to_json()
+# with open("model.json", "w") as json_file:
+#     json_file.write(model_json)
+
+
+# model.save_weights("model_weights.h5")
+
+# with open('tokenizer.pickle', 'wb') as handle:
+#     pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 accr = model.evaluate(X_test,Y_test)
 print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(accr[0],accr[1]))
@@ -96,6 +104,8 @@ print('Test set\n  Loss: {:0.3f}\n  Accuracy: {:0.3f}'.format(accr[0],accr[1]))
 new_complaint = ['The experience at the restaurant was dreadful. The service was abysmal; we waited over an hour just to get our orders taken, and when the food finally arrived, it was cold and tasteless. On top of that, the ambiance was terrible, with loud music blaring from the speakers, making it impossible to hold a conversation. Overall, it was a complete waste of time and money.']
 seq = tokenizer.texts_to_sequences(new_complaint)
 padded = pad_sequences(seq, maxlen=MAX_SEQUENCE_LENGTH)
-pred = model.predict(padded)
+pred = model.predict(padded).tolist()[0]
 labels = ['anger', 'anticipation', 'disgust', 'fear', 'joy', 'love', 'optimism', 'pessimism', 'sadness', 'surprise', 'trust']
-print(pred, labels[np.argmax(pred)])
+sorted_emotions = sorted(zip(labels, pred), key=lambda x: x[1], reverse=True)
+for key, value in sorted_emotions:
+	print(f"{key}: {value}")
